@@ -2,7 +2,7 @@
 #include <string> 
 #include <fstream> //for files
 #include <cstdlib> //rand(), srand()
-#include <ctime>
+#include <ctime> //for srand()
 
 using namespace std;
 
