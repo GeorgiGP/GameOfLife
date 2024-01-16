@@ -1,3 +1,18 @@
+/**
+*
+* Solution to course project # 2
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2023/2024
+*
+* @author Georgi Lazov
+* @idnumber 0MI0600299* @compiler VS
+*
+* <gameFile "Game Of Life">
+*
+*/
+
+
 #include <iostream>
 #include <string> 
 #include <fstream> //for files
