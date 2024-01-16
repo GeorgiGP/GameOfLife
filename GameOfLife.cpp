@@ -2,7 +2,7 @@
 #include <string> 
 #include <fstream> //for files
 #include <cstdlib> //rand(), srand()
-#include <ctime> //for srand()
+#include <ctime>
 
 using namespace std;
 
@@ -86,9 +86,13 @@ void printField(const bool field[MAX_ROWS][MAX_COLS], const int currRows, const 
 {
 	cout << endl;
 	for (int i = 0; i < countDigits(currRows); i++)
+	{
 		cout << ' ';
+	}
 	if (currCols > 1)
+	{
 		cout << '1';
+	}
 	for (int i = 0; i < currCols - 2; i++)
 	{
 		cout << ' ';
@@ -99,25 +103,33 @@ void printField(const bool field[MAX_ROWS][MAX_COLS], const int currRows, const 
 		if (i == 0)
 		{
 			for (int i = 0; i < countDigits(currRows) - 1; i++)
+			{
 				cout << ' ';
+			}
 			cout << '1'; //first row
 		}
 		else if (i == (currRows - 1))
+		{
 			cout << currRows; //last row
+		}
 		else
 		{
 			for (int i = 0; i < countDigits(currRows); i++)
+			{
 				cout << ' ';
+			}
 		}
-
-
 
 		for (int j = 0; j < currCols; j++)
 		{
 			if (field[i][j])
+			{
 				cout << '@';
+			}
 			else
+			{
 				cout << '-';
+			}
 		}
 		cout << endl;
 	}
@@ -177,8 +189,9 @@ void sizePlus1onRight(bool field[MAX_ROWS][MAX_COLS], bool fieldAfterStepForward
 	const int currRows, const int currCols, int& currColsAfter)
 {
 	if (currColsAfter >= MAX_COLS)
+	{
 		return;
-
+	}
 	bool gotWiderRight = false;
 	for (int i = 1; i < currRows - 1; i++)
 	{
@@ -199,8 +212,9 @@ void sizePlus1onLeft(bool field[MAX_ROWS][MAX_COLS], bool fieldAfterStepForward[
 	const int currRows, const int currRowsAfter, int& currColsAfter)
 {
 	if (currColsAfter >= MAX_COLS)
+	{
 		return;
-
+	}
 	bool gotWiderLeft = false;
 	for (int i = 1; i < currRows - 1; i++)
 	{
@@ -229,8 +243,9 @@ void sizePlus1Down(bool field[MAX_ROWS][MAX_COLS], bool fieldAfterStepForward[MA
 	const int currRows, const int currCols, int& currRowsAfter)
 {
 	if (currRowsAfter >= MAX_ROWS)
+	{
 		return;
-
+	}
 	bool gotWiderDown = false;
 	for (int i = 1; i < currCols - 1; i++)
 	{
@@ -250,8 +265,9 @@ void sizePlus1onUp(bool field[MAX_ROWS][MAX_COLS], bool fieldAfterStepForward[MA
 	const int currCols, int& currRowsAfter, const int currColsAfter)
 {
 	if (currRowsAfter >= MAX_ROWS)
+	{
 		return;
-
+	}
 	bool gotWiderUp = false;
 	for (int i = 1; i < currCols - 1; i++)
 	{
@@ -273,7 +289,6 @@ void sizePlus1onUp(bool field[MAX_ROWS][MAX_COLS], bool fieldAfterStepForward[MA
 					fieldAfterStepForward[0][j] = false;
 				}
 			}
-
 			fieldAfterStepForward[0][i] = true;
 			gotWiderUp = true;
 		}
@@ -394,9 +409,13 @@ void randomization(bool field[MAX_ROWS][MAX_COLS], const int currRows, const int
 		for (int j = 0; j < currCols; j++)
 		{
 			if ((1 + rand() % chance) == 1) //chance numbers between 1 and chance, chance to get 1 is 1/chance
+			{
 				field[i][j] = true;
+			}
 			else
+			{
 				field[i][j] = false;
+			}
 		}
 	}
 	return;
@@ -418,13 +437,21 @@ void saveToFileValid(const bool field[MAX_ROWS][MAX_COLS], const int currRows, c
 				if (field[i][j])
 				{
 					if (i < highestPosition)
+					{
 						highestPosition = i;
+					}
 					if (i > lowestPosition)
+					{
 						lowestPosition = i;
+					}
 					if (j < mostLeftPosition)
+					{
 						mostLeftPosition = j;
+					}
 					if (j > mostRightPosition)
+					{
 						mostRightPosition = j;
+					}
 				}
 			}
 		}
@@ -494,9 +521,13 @@ void loadStartingField(bool field[MAX_ROWS][MAX_COLS], int& currRows, int& currC
 		for (int i = 0; i < myStrLength(lineRow); i++)
 		{
 			if (lineRow[i] == '@')
+			{
 				field[row][i] = true;
+			}
 			else //if the file has other symbols except '@', '-' , it turns them into '-'.
+			{
 				field[row][i] = false;
+			}
 		}
 		++row;
 	}
@@ -571,26 +602,32 @@ void selectMenuOption()
 		cin >> choice_number;
 		validate(choice_number, NEW_GAME, EXIT);
 
-		bool field[MAX_ROWS][MAX_COLS] = { {false} };
-		int currentRows, currentCols = 0;
-
-		switch (choice_number)
+		if (choice_number == NEW_GAME)
 		{
-		case NEW_GAME:
+			bool field[MAX_ROWS][MAX_COLS] = {};
+			int currentRows, currentCols = 0;
 			currentRows = STARTING_ROWS;
 			currentCols = STARTING_COLS;
-			break;
-		case LOAD_GAME:
+			selectInGameOption(field, currentRows, currentCols);
+		}
+		else if(choice_number == LOAD_GAME)
+		{
+			bool field[MAX_ROWS][MAX_COLS] = {};
+			int currentRows, currentCols = 0;
 			if (!loadValidFieldFile(field, currentRows, currentCols))
+			{
 				continue;
-			break;
-		case EXIT:
+			}
+			selectInGameOption(field, currentRows, currentCols);
+		}
+		else if (choice_number == EXIT)
+		{
 			return;
-		default:
+		}
+		else
+		{
 			continue;
 		}
-
-		selectInGameOption(field, currentRows, currentCols);
 	}
 }
 
